@@ -1,0 +1,123 @@
+% Metódy inžinierskej práce
+
+\documentclass[10pt,twoside,slovak,a4paper]{article}
+% odstranenie twoside da prec odsadenie
+
+\usepackage[slovak]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[IL2]{fontenc} % lepšia sadzba písmena Ľ než v T1
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{url} % príkaz \url na formátovanie URL
+\usepackage{hyperref} % odkazy v texte budú aktívne (pri niektorých triedach dokumentov spôsobuje posun textu)
+
+\usepackage{cite}
+%\usepackage{times}
+
+\pagestyle{headings}
+
+\title{Aplikovanie modelových prístupov v oblasti udržiavania a rozvoja softvéru\thanks{Semestrálny projekt v predmete Metódy inžinierskej práce, ak. rok 2021/20, vedenie: Ing. Vladimír Mlynarovič, PhD.}} % meno a priezvisko vyučujúceho na cvičeniach
+
+\author{Ľubomír Balla\\[2pt]
+	{\small Slovenská technická univerzita v Bratislave}\\
+	{\small Fakulta informatiky a informačných technológií}\\
+	{\small \texttt{xballal@stuba.sk}}
+	}
+
+\date{\small 06.11.2021} 
+
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Udržiavanie je z pohľadu životného cyklu softvérového produktu dôležitá a dlhodobá etapa.
+\ldots
+\end{abstract}
+
+
+
+\section{Úvod}
+
+Udržiavanie softvéru je jeho modifikácia, zlepšovanie a oprava chýb v doručenom softvérovom produkte alebo jeho adaptácia na meniace sa prostredie.\cite{6116869} Je to zväčša časovo náročná a zložitá úloha ktorá počas životného cyklu softvéru bežne stojí 4 krát toľko ako samotoný vývoj a používa sa na to 60 precent pracovníkov z celkového počtu pôvodných vývojárov.
+
+
+\section{Proces údržby} \label{proces}
+Aj keď sa tento proces bežne vykonáva pri dodaní produktu zákazníkovi, taktiež je bežné, že sa tento proces naštartuje pri špecifickom probléme, o ktorom sa tým vývojárov dozvie až po upozornení od zákazníka.
+Proces údržby sa skladá z niekoľkých častí, počas ktorých vieme prichádzať na nedostatky a chyby, ktoré vznikli pri pôvodnom vývoji a ktoré neboli do teraz odhalené alebo sa na ne doteraz neprišlo.
+\begin{itemize}
+    \item Príprava.\cite{6116869} Adekvátna príprava je dobrým začiatkom údržby. Vrátane určenia personálu údržby, zabezpečenia hladkej komunikácie na uľahčenie údržby, školenie, prípravu a schvaľovanie „plánu údržby softvéru“ a pod.
+    \item Žiadosť.\cite{6116869} Proces údržby začína žiadosťou od uživateĺa.
+    \item Analýza žiadosti.\cite{6116869} Tím zodpovedný za údržbu softvéru začne analyzovať prijatú žiadosť, ak majú dostupný tím analytikov tak s nimi môžu spolupracovať. V tomto kroku sa podľa vážnosti a zložitosti prijatej žiadosti začne uvažovať nad možnosťami riešenia a, čo všetko existujúca chyba alebo nedostatok ovplyvňuje teraz a, čo všetko bude ovplyvnené po zmene.
+    \item Analýza analýzy.\cite{6116869} Proces je dôležitým prostriedkom na zabezpečenie udržiavania kvality, môže včas odhaliť problémy a znížiť riziko neskôr objavených problémov údržby.
+    \item Modifikácia implementácie.\cite{6116869} V tomto kroku sa začne upravovať existujúci softvér podľa pôvodnej žiadosti a podľa výsledkov analýzy problému.
+    \item Testovanie.\cite{6116869} Testovanie vykonanej zmeny. Tu sa prvotne môžu odhaľovať problémy, ktoré vznikli v predošlom kroku.
+    \item Overenie.\cite{6116869} Po dokončení testovania sa overí správnosť riešenia. V tomto kroku sa opäť môžu odhaliť chyby, ktoré vznikli pri úprave existujúcej implementácie, ale môže sa aj zistiť, že celé navrhnuté riešenie nieje vyhovujúce.
+    \item Implementácia.\cite{6116869} Po dokončení overovania sa môže zaviesť zmena implementácie do funkčného prostredia.
+\end{itemize}
+
+
+\section{Modely} \label{modely}
+Model procesu údržby je abstraktná reprezentácia vývoja softvéru pomocou ktorej vieme analyzovať a deliť činnosti spojené s touto úlohou. Existuje niekoľko odlišných modelov ktoré sa používajú pri procese udržiavania softvéru, každý z nich ponúka iný prístup k procesu udrživania a vyberať by sme si mali podľa potreby ten najvhodnejší.  \cite{6116869}
+
+\subsection{Quickly modify model} \label{modely:quick}
+Model rýchlych úprav je proces údržby s prístupom „hasenia požiaru, čo je dočasná metóda údržby softvéru. Problém so softvérom by sa mal vyriešiť, čo najskôr, nemali by sa dlhodobo analyzovať vplyvy na implementáciu zmien. Zvyčajne neanalyzujte kód, aby ste odhalili dlhodobé dopady zmien na zvyšok kódu.\cite{6116869}
+
+V správnom prostredí je tento model veľmi efektívny. Napríklad, ak systém vyvíja a udržiava jedna osoba, ktorá je dobre oboznámená so systémom, má schopnosť pri absencii podrobnej dokumentácie v systéme vykonať zmeny, určiť problémy a vie, ako rýchlo a ekonomicky upraviť a udržiavať softvér.\cite{6116869}
+
+Tento prístup síce nieje spoľahlivý, ale aj tak sa často používa, aj tam, kde by sa nemal. Hlavným dôvodom pre jeho nadmerné používanie je zrejme limitovaný čas a zdroje pri údržbe. Softvér, ktorý sa spolieha na tento model po určitom čase s najväčšou pravdepodobnosťou nahromadí veľa problémov, bude čoraz náročnejší na údržbu a vykonávanie hocijakej zmeny bude trvať dlhšie. Preto by sa tento model mal používať iba v núdzových prípadoch a nemal by slúžiť ako hlavný model procesu údržby softvérového produktu.\cite{6116869}
+
+\subsection{Boehmský model} \label{modely:boehm}
+Model navrhnutý Dr. Barry W. Boehmom založený na ekonomických modeloch a princípoch. Základná myšlienka tohto modelu je tá, že ekonomické modely a princípy môžu nielen zlepšiť produktivitu v oblasti udržiavania softvéru, ale, že dokážu aj pomôcť pri pochopení procesu údržby.\cite{6116869}
+
+Proces údržby je v tomto modeli rozdelený na manažérske rozhodovanie na dosiahnutie zmeny, dodanie softvéru a vyhodnotenie štyroch etáp, vyjadrených ako uzavreté slučky na udržanie procesu podporovaného manažérskeho rozhodovacieho procesu v rámci procesu udržiavania softvéru.\cite{6116869}
+
+Vo fáze manažérskeho rozhodovania sa využívajú špecifické stratégie a
+navrhne sa súbor zmien, ktorý bude vyhodnocovaný z pohľadov nákladnosti a efektivity na určenie zmien, ktoré budú schválené a implementované v rámci stanoveného rozpočtu.
+Z funkčného hľadiska výroby model napodobňuje ekonomiku investícií a vzťah medzi príjmami, ktorý má 3 typické fázy:\cite{6116869}
+
+\begin{itemize}
+    \item Investičná fáza.\cite{6116869}
+    \item Štádium s vysokou návratnosťou.\cite{6116869}
+    \item Fáza efektívnej redukcie.\cite{6116869}
+\end{itemize}
+
+Boehmov model sa zameriava na manažérske rozhodovanie, vykonávanie schválených zmien v procese udržiavania ridených rovnováhou medzi investíciou a výhodami z ekonomického záujmu riadenia procesu udržiavania softvéru. Na základe tohto procesu spoločnosť vie vypracovať rozumnú a efektívnu stratégiu údržby.\cite{6116869}
+
+\subsection{IEEE model} \label{modely:IEEE}
+S rastom softvérového priemyslu sa rovnako rozrástla nutnosť a dôležitosť štandardov softvérovej údržby. Organizácia IEEE z tohto dôvodu vydala "IEEE
+Software Maintenance Standards" (IEEE 1219-1993) v ktorých bližšie špecifikovali činnosti riadenia a implementácie iteratívneho procesu udržiavania softvéru vrátane vstupov, spracovania, kontroly, výstupu atď... Je to štandard ktorý by mal byť využívaný pri plánovaní vývoja softvéru a pri plánovaní údržby softvéru. Každá fáza modelu údržby IEEE je popísaná nižšie:\cite{6116869}
+
+\begin{itemize}
+    \item Klasifikácia a identifikácia. Proces údržby začína po zadaní požiadavky na zmenu od užívateĺa, developera alebo manažéra. Požiadavka na údržbu môže mať charakter hocijakého druhu zmeny (nápravná údržba, adaptívna údržba, preventívnu údržbu) ktorá je ponúkaná spoločnosťou aby vedela určiť prioritu danej požiadavky na údržbu resp. na vykonanie zmeny alebo úpravy existujúceho softvéru.\cite{6116869}
+    \item Analýza. V tomto kroku sa analyzuje realizovateľnosť zmeny a taktiež sa vykoná podrobná analýza hlavných zmien. Analýza realizovateľnosti veľkých zmien v softvéri slúži na určenie výstuplných vplyvov možných riešení a ich nákladov. Podrobná analýza hlavných zmien je úplná špecifikácia požiadaviek, identifikácia potreby na zmenu prvkov (modulov), navrhované testovanie atď... Ako posledná časť tejto fázy sa rozhodne či sa daná požiadavka vykoná alebo nie.\cite{6116869}
+    \item Dizajn. Sumarizuje všetky informácie aby sa dal kontrolovať a meniť dizajne softvéru vrátane dokumentácie, výsledkov fázy analýzy, zdrojový kód báza znalostí a dalšie informácie. Fáza analýzy základného návrhu by sa mala aktualizovať mal by sa  aktualizovať plán testovania a mali by sa revidovať výsledky podrobnej analýzy na overenie požiadaviek na zmenu.\cite{6116869}
+    \item Implementácia. Formulujte plány na zmenu. Zahrňte nasledujúce procesy: kódovanie a
+    jednotkové testovanie, integrácia a integračné testy, analýza rizík, testovacia  prípravná revízia a aktualizácia dokumentácie.\cite{6116869}
+    \item Testovanie systému. Rozhranie medzi základným testovaním implementácie a hlavným akceptačným testovaním, aby sa zabezpečilo, že systém zodpovedá originálnym požiadavkám ako aj požiadavkám pochádzajúcich z  dodatočnej zmeny. Malo by sa využiť regresné testovanie, aby sa zabezpečilo, že sa nezavedú židne nové chyby.\cite{6116869}
+    \item Akceptačné testovanie. Nastáva pri úplnej integrácii systému, užívateľom alebo treťou stranou. Táto fáza slúži hlavne na dokončenie nasledujúcich úloh: vyhodnotenie predošlého testovania, zistenie či vykonané zmeny spĺňajú vstupné požiadavky, vytvorenie novej verzie softvéru alebo zaintegrovanie vykonaných zmien do základnej verzie softvéru, pripraviť finálnu verziu softvérovej dokumentácie vrátane systémovej dokumentácie a dokumentácie pre užívateľa) atď.\cite{6116869}
+    \item Doručenie. Revidovaný systém sa dáva používateľovi, ktorý ho nainštaluje a spustí ho. Audit fyzickej konfigurácie by mal byť vykonaný, mala by sa vytvoriť záložná dokumentácia a mali by prebehnúť školenia. Po dodaní je systém nasadený do prevádzky.\cite{6116869}
+\end{itemize}
+
+V porovnaní s predchádzajúcim modelom, model IEEE približuje procesy činností udržiavania softvéru ako štandard, a to znamená, že môže byť použitý pri všetkých procesoch udržiavania softvéru. Avšak odlišný softvér v dôsledku odlišných vlastností, bude mať odlišné procesy udržiavania. IEEE je veľký a komplexný model špecifikácií pre rôzne softvérové produkty a proces by mal byť podľa potreby upravený pre použitie so softvérom, čo má svoje vlastné špecifické požiadavky pri procese udržiavania.\cite{6116869}
+
+\subsection{Iteratívny model} \label{modely:iterative}
+Spočiatku môže byť tento model navrhnutý aj ako prvotný vývojový model, pretože vývojári softvéru zvyčajne nebudú úplne rozumieť požiadavkám resp. nedokážu vybudovať dokonalý systém, ktorý by bol vhodný na udržiavanie. \cite{6116869}
+
+Zákaldom tohto modelu je implementácia softvérových zmien pomocou iteratívneho procesu a iteračným vylepšovaním softvéru počas procesu udržiavania. Podľa predpokladaného vplyvu na existujúci softvér vyplývajúcej z požiadavky na zmenu sa vykoná zmena v každej fáze vývoja a tá sa potom postupne doimplementuje do softvéru. \cite{6116869}
+
+Takýmto spôsobom sa vieme vyhnúť problémom ktoré vznikajú pri snahe vykonať všetky zmeny patriace k údržbe čo najrýchlejšie.\cite{6116869}
+
+\section{Analýza} \label{anlyza}
+
+\section{Záver} \label{zaver} % prípadne iný variant názvu
+
+%\acknowledgement{Ak niekomu chcete poďakovať\ldots}
+
+% týmto sa generuje zoznam literatúry z obsahu súboru literatura.bib podľa toho, na čo sa v článku odkazujete
+\bibliography{literatura}
+\bibliographystyle{abbrv} % prípadne alpha, abbrv alebo hociktorý iný
+
+\end{document}
